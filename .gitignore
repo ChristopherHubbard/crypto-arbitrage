@@ -1,0 +1,4 @@
+# Files and Folders to ignore in git
+
+package-lock.json
+node_modules
