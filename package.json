@@ -1,10 +1,11 @@
 {
   "name": "crypto-arbitrage",
   "version": "1.0.0",
-  "description": "",
+  "description": "Crypto Trading platform allowing arbitrage trades",
   "main": "index.js",
   "dependencies": {
     "asap": "^2.0.6",
+    "copy-webpack-plugin": "^4.5.2",
     "core-js": "^2.5.7",
     "encoding": "^0.1.12",
     "fbjs": "^0.8.17",
@@ -28,12 +29,19 @@
     "safer-buffer": "^2.1.2",
     "setimmediate": "^1.0.5",
     "symbol-observable": "^1.2.0",
+    "typescript": "^3.0.3",
     "ua-parser-js": "^0.7.18",
     "whatwg-fetch": "^2.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.9.4",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && node --inspect-brk ./src/index.js",
+    "build": "tsc -p ./ && webpack",
+    "watch": "tsc -watch"
   },
   "repository": {
     "type": "git",
