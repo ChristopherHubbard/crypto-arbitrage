@@ -13,7 +13,7 @@ interface IUserConstants
     LOGOUT_FAILURE: string
 }
 
-export const alertConstants: IUserConstants =
+export const userConstants: IUserConstants =
 {
     REGISTER_REQUEST: 'REGISTER_REQUEST',
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',

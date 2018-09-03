@@ -1,22 +1,12 @@
 import { alertConstants } from '../constants/alert.constants';
+import { IAction } from '../models/actions.model';
 
-// Define interface types
+// Define interface model
 interface IAlertActions
 {
     success: (message: string) => IAction
     error: (message: string) => IAction
     clear: (message: string) => IAction
-}
-
-// This IAction interface might want to be moved over to some interfaces folder
-interface IAction
-{
-    type: string
-}
-
-interface IMessageAction extends IAction
-{
-    message: string
 }
 
 // Define exported object
@@ -28,7 +18,7 @@ export const alertActions: IAlertActions =
 };
 
 // Define redux action functions
-function success(message: string): IMessageAction
+function success(message: string): IAction
 {
     return {
         type: alertConstants.SUCCESS,
@@ -36,7 +26,7 @@ function success(message: string): IMessageAction
     };
 }
 
-function error(message: string): IMessageAction
+function error(message: string): IAction
 {
     return {
         type: alertConstants.ERROR,
@@ -44,7 +34,7 @@ function error(message: string): IMessageAction
     };
 }
 
-function clear(message: string): IMessageAction
+function clear(message: string): IAction
 {
     return {
         type: alertConstants.CLEAR,
