@@ -4,6 +4,7 @@ package-lock.json
 
 # compiled output
 /dist
+/distlib
 /tmp
 /out-tsc
 *.js

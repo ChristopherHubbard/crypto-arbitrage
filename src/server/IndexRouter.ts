@@ -13,7 +13,7 @@ import * as mongoose from 'mongoose';
 const path: any = require("path");
 
 // Get the sql Configuration in this environment -- Normally the WAYPOINT would be set by environment
-const sqlConfig: ConnectionConfig = require("../sqlconfig.json")["DELL690"];
+const sqlConfig: ConnectionConfig = require("./config/sqlconfig.json")["DELL690"];
 
 // Model for Typegoose -- wonder if there is a way to combine this with the SQL stuff
 class SecurityTypeGoose extends Typegoose 
@@ -73,7 +73,7 @@ export class IndexRouter extends CustomRouter
         this.router.get("/", function(req: Request, res: Response, next: NextFunction) 
         {
             // This is one of the sections that needs to be changed for react v angular v vue -- this sends the homepage to the front
-            res.sendFile(path.join(__dirname, "index.html"));
+            res.sendFile(path.join(__dirname, '/index.html'));
         });
 
         this.router.get("/SECURITIES", function(req : Request, res : Response, next : NextFunction): void

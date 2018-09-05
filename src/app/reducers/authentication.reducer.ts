@@ -1,7 +1,5 @@
-import { userConstants } from '../constants/user.constants';
-import { User } from '../models/user.model';
-import { AuthenticationState } from '../models/state.model';
-import { IAction } from '../models/actions.model';
+import { userConstants } from '../constants';
+import { User, AuthenticationState, IAction } from '../models';
 
 const user: User = JSON.parse(JSON.stringify(localStorage.getItem('user')));
 const initialState: AuthenticationState = user ? { loggedIn: true, user: user } : {};

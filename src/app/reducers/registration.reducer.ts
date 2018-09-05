@@ -1,6 +1,5 @@
-import { userConstants } from '../constants/user.constants';
-import { RegistrationState } from '../models/state.model';
-import { IAction } from '../models/actions.model';
+import { userConstants } from '../constants';
+import { RegistrationState, IAction } from '../models';
 
 export function registration(state: RegistrationState = {}, action: IAction): RegistrationState
 {

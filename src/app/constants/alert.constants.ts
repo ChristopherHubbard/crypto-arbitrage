@@ -7,7 +7,7 @@ interface IAlertConstants
 
 export const alertConstants: IAlertConstants =
 {
-    SUCCESS: 'ALERTT_SUCCESS',
+    SUCCESS: 'ALERT_SUCCESS',
     ERROR: 'ALERT_ERROR',
     CLEAR: 'ALERT_CLEAR'
 }

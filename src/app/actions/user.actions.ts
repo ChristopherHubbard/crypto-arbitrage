@@ -1,7 +1,6 @@
-import { userConstants } from '../constants/user.constants';
-import { User } from '../models/user.model';
-import { UserService } from '../services/user.service';
-import { IAction } from '../models/actions.model';
+import { userConstants } from '../constants';
+import { User, IAction } from '../models';
+import { UserService } from '../services';
 import { alertActions } from './alert.actions';
 import { Dispatch } from 'redux';
 

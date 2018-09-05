@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { User } from '../models/user.model';
+import { User } from '../models';
+import Config from '../config';
 
 // Abstract since totally static class
 export abstract class UserService
@@ -18,7 +19,7 @@ export abstract class UserService
         try
         {
             // Await the response -- shouldn't be any returned data for the post
-            return await axios.post(`${config.apiUrl}/users/register`, requestOptions);
+            return await axios.post(`${Config.apiUrl}/users/register`, requestOptions);
         }
         catch(error)
         {
@@ -42,7 +43,7 @@ export abstract class UserService
         try
         {
             // Await the response
-            const response: AxiosResponse = await axios.get(`${config.apiUrl}/users/authenticate`, requestOptions);
+            const response: AxiosResponse = await axios.get(`${Config.apiUrl}/users/authenticate`, requestOptions);
 
             // Check for the response token -- this proves authentication
             const user = await response.data;

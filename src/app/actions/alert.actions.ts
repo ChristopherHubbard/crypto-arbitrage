@@ -1,5 +1,5 @@
-import { alertConstants } from '../constants/alert.constants';
-import { IAction } from '../models/actions.model';
+import { alertConstants } from '../constants';
+import { IAction } from '../models';
 
 // Define interface model
 interface IAlertActions

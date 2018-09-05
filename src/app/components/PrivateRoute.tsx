@@ -1,12 +1,9 @@
 import { Route, Redirect } from 'react-router-dom';
 import * as React from 'react';
 
-export const PrivateRoute = ({
-    component: Component,
-    ...rest
-}) => 
-{
-    <Route {...rest} render={ props => {
-        localStorage.getItem('user') ? <Component {...props}/> : <Redirect to={{ pathname: '/login', state: { from: props.location } }}/>
-    }}/>
-}
+// Create route that either creates component in render or redirects to the login page
+export const PrivateRoute = ({ component: Component, ...rest }: any) => (
+    <Route {...rest} render={ (props) => (
+        localStorage.getItem('user') ? <Component {...props}/> : <Redirect to='/login'/>
+    )}/>
+);
