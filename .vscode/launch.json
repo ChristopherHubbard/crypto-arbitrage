@@ -17,10 +17,10 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/distlib/src/server/index.ts",
+            "program": "${workspaceFolder}/src/server/index.ts",
             "preLaunchTask": "npm: build",
             "outFiles": [
-                "${workspaceFolder}/distlib/src/server/index.js"
+                "${workspaceFolder}/src/server/index.js"
             ]
         }
     ]

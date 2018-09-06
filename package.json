@@ -70,8 +70,8 @@
     "webpack-cli": "^3.1.0"
   },
   "scripts": {
-    "start": "npm run build && node --inspect-brk ./src/index.js",
-    "build": "tsc -p ./ && webpack",
+    "start": "npm run build && node --inspect-brk ./distlib/src/server/index.js",
+    "build": "tsc -p ./ && webpack --config ./distlib/webpack.config.js --mode development",
     "watch": "tsc -watch"
   },
   "repository": {
