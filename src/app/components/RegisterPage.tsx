@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect, DispatchProp } from 'react-redux';
-import { userActions } from '../actions';
-import { User } from '../models';
 import { Form, Field, reduxForm } from 'redux-form';
-
-interface RegisterProps
-{
-    registering: boolean
-}
+import { CustomInput } from './CustomInput';
+import { userActions } from '../actions';
+import { User, RegistrationState as RegisterProps } from '../models';
+import { required, validateEmail, validatePassword, validatePhone, validateUsername } from '../services';
 
 interface RegisterState
 {
@@ -26,7 +23,7 @@ class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, Re
         // Set initial state
         this.state = {
             user: {
-                userName: '',
+                username: '',
                 password: '',
                 phone: '',
                 email: ''
@@ -54,7 +51,7 @@ class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, Re
         }));
     }
 
-    private handleSubmit(event: React.ChangeEvent<HTMLInputElement>): void
+    private handleSubmit(event: React.FormEvent<HTMLFormElement>): void
     {
         // Why do I want to prevent the default action?
         event.preventDefault();
@@ -81,10 +78,21 @@ class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, Re
             <div>
                 <h2> Register </h2>
                 <Form onSubmit={this.handleSubmit}>
-                    <Field name="username" type="text" label="Username" validate={[]} onChange={this.handleChange}/>
-                    <Field name="password" type="text" label="Password" validate={[]} onChange={this.handleChange}/>
-                    <Field name="email" type="email" label="Email" validate={[]} onChange={this.handleChange}/>
-                    <Field name="phone" type="number" label="Phone Number" validate={[]} onChange={this.handleChange}/>
+                    <div>
+                        <Field name="username" label="Username" type="text" validate={[required, validateUsername]} component={CustomInput} onChange={this.handleChange}/>
+                    </div>
+                    <div>
+                        <Field name="password" label="Password" type="password" validate={[required, validatePassword]} component={CustomInput} onChange={this.handleChange}/>
+                    </div>
+                    <div>
+                        <Field name="email" label="Email" type="email" validate={[required, validateEmail]} component={CustomInput} onChange={this.handleChange}/>
+                    </div>
+                    <div>
+                        <Field name="phone" label="Phone Number" type="tel" validate={[required, validatePhone]} component={CustomInput} onChange={this.handleChange}/>
+                    </div>
+                    <div>
+                        <button type="submit" disabled={registering}> Submit </button>
+                    </div>
                 </Form>
             </div>
         );
