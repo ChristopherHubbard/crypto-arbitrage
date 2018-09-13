@@ -7,7 +7,8 @@ export abstract class CoinService
 
     public static async getAssets(): Promise<any>
     {
-        var requestOptions: any = {
+        const requestOptions: any =
+        {
             method: "GET",
             headers: { "X-CoinAPI-Key": CoinService.coinAPIKey }
         };
@@ -21,5 +22,50 @@ export abstract class CoinService
         {
             console.error(error);
         }
+    }
+
+    // Make sure that this works for extended combinations
+    public static async getCurrentExchangeRate(baseAsset: string, quoteAsset: string): Promise<any>
+    {
+        const requestOptions: any =
+        {
+            method: "GET",
+            headers: { "X-CoinAPI-Key": CoinService.coinAPIKey }
+        };
+
+        // Send the request
+        try
+        {
+            return await axios.get(`${config.coinAPIUrl}/v1/exchangerate/${baseAsset}/${quoteAsset}`, requestOptions);
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+    }
+
+    public static async getAllTimePeriods(): Promise<any>
+    {
+        const requestOptions: any =
+        {
+            method: "GET",
+            headers: { "X-CoinAPI-Key": CoinService.coinAPIKey }
+        };
+
+        // Send the request
+        try
+        {
+            return await axios.get(`${config.coinAPIKey}/v1/ohlcv/periods`, requestOptions);
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+    }
+
+    // Get the historical data -- this is for a particular exchange tho?
+    public static async getOHCVLData(): Promise<any>
+    {
+        
     }
 }

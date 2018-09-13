@@ -6,5 +6,8 @@ export interface IAction
     type: string,
     message?: string,
     error?: string,
-    user?: User
+    user?: User,
+    exchangeRate?: any // change this,
+    baseAsset?: string,
+    quoteAsset?: string
 }

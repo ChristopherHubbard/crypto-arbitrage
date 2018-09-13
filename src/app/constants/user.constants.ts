@@ -1,10 +1,10 @@
 interface IUserConstants
 {
-    REGISTER_REQUEST: string
+    REGISTER_REQUEST: string,
     REGISTER_SUCCESS: string,
     REGISTER_ERROR: string,
 
-    LOGIN_REQUEST: string
+    LOGIN_REQUEST: string,
     LOGIN_SUCCESS: string,
     LOGIN_FAILURE: string,
 
