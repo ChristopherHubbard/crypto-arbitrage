@@ -4,11 +4,11 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    Build: "./src/Index.tsx",
+    build: "./distlib/src/app/index.js",
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, '../dist'),
+    //publicPath: '/dist/',
     filename: '[name].js'
   },
   module: {
