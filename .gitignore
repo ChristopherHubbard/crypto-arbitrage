@@ -2,6 +2,9 @@
 
 package-lock.json
 
+# Include react-stockcharts types
+!/node_modules/@types/react-stockcharts
+
 # compiled output
 /dist
 /distlib

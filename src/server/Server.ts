@@ -7,7 +7,7 @@ import * as path from "path";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 
-import { IndexRouter } from "./IndexRouter";
+import { UserRouter, IndexRouter } from "./routers";
 
 //The Server class
 export class Server
@@ -71,9 +71,11 @@ export class Server
     private Routes()
     {
         //Index router for homepage and related
-        let indexRouter: IndexRouter = new IndexRouter("This is the homepage router");
+        const userRouter: UserRouter = new UserRouter("This is the user router");
+        const indexRouter: IndexRouter = new IndexRouter("This is the homepage router");
 
         //Use the router middleware -- use as many as necessary -- assign them their own base addresses for relative paths
         this.app.use('/', indexRouter.router);
+        this.app.use('/users', userRouter.router);
     }
 }

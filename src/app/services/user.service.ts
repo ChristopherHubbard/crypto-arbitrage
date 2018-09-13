@@ -13,7 +13,7 @@ export abstract class UserService
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
+            body: user
         };
 
         try
@@ -24,7 +24,7 @@ export abstract class UserService
         catch(error)
         {
             // Log any error
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -36,7 +36,7 @@ export abstract class UserService
         {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
+            params: user
         };
 
         // Try catch for the new Async-Await structure -- hopefully works

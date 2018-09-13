@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect, DispatchProp } from 'react-redux';
-import { Form, Field, reduxForm } from 'redux-form';
+import { Form, Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { CustomInput } from './CustomInput';
 import { userActions } from '../actions';
 import { User, RegistrationState as RegisterProps } from '../models';
@@ -14,9 +14,9 @@ interface RegisterState
 }
 
 // Register page should have both props and state
-class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, RegisterState>
+class RegisterPage extends React.Component<RegisterProps & DispatchProp<any> & InjectedFormProps, RegisterState>
 {
-    constructor(props: RegisterProps & DispatchProp<any>)
+    constructor(props: RegisterProps & DispatchProp<any> & InjectedFormProps)
     {
         super(props);
 
@@ -70,13 +70,13 @@ class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, Re
     // React render method
     public render(): React.ReactNode
     {
-        const { registering } = this.props;
+        const { registering, invalid } = this.props;
         const { user, submitted } = this.state;
 
         // Create the react node -- this is the page markup -- add validators for fields
         return (
             <div>
-                <h2> Register </h2>
+                <h1> Create your Account </h1>
                 <Form onSubmit={this.handleSubmit}>
                     <div>
                         <Field name="username" label="Username" type="text" validate={[required, validateUsername]} component={CustomInput} onChange={this.handleChange}/>
@@ -91,7 +91,8 @@ class RegisterPage extends React.Component<RegisterProps & DispatchProp<any>, Re
                         <Field name="phone" label="Phone Number" type="tel" validate={[required, validatePhone]} component={CustomInput} onChange={this.handleChange}/>
                     </div>
                     <div>
-                        <button type="submit" disabled={registering}> Submit </button>
+                        <button type="submit" disabled={registering || invalid}> Submit </button>
+                        <Link to="/"> Cancel </Link>
                     </div>
                 </Form>
             </div>

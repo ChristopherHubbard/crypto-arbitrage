@@ -4,6 +4,7 @@ import RegisterPage from './RegisterPage';
 import LoginPage from './LoginPage';
 import HomePage from './HomePage';
 import { PrivateRoute } from './PrivateRoute';
+import { history } from '../services';
 
 export class App extends React.Component<{}, {}>
 {
@@ -18,13 +19,13 @@ export class App extends React.Component<{}, {}>
             <div className="jumbotron">
                 <div className="container">
                     <div className="col-sm-8 col-sm-offset-2">
-                        <HashRouter>
+                        <Router history={history}>
                             <div>
-                                <PrivateRoute path="/" component={HomePage}/>
+                                <PrivateRoute exact path="/" component={HomePage}/>
                                 <Route path="/login" component={LoginPage}/>
                                 <Route path="/register" component={RegisterPage}/>
                             </div>
-                        </HashRouter>
+                        </Router>
                     </div>
                 </div>
             </div>

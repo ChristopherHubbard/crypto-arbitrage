@@ -5,8 +5,6 @@ export const CustomInput = ({ input, label, type, meta: { error, touched } }: an
 
     return (
         <div className="row-md">
-            <label> {label} </label>
-
             <div>
                 <input className="form-text-input primary-border"  type={type} {...input} placeholder={label}/>
 

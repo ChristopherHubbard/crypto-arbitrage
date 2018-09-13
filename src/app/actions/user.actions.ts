@@ -3,6 +3,7 @@ import { User, IAction } from '../models';
 import { UserService } from '../services';
 import { alertActions } from './alert.actions';
 import { Dispatch } from 'redux';
+import { history } from '../services';
 
 // Interfaces for the models
 interface IUserActions
@@ -44,6 +45,9 @@ function register(user: User): (dispatch: Dispatch<any>) => void
 
             // Dispatch the sucess
             dispatch(alertActions.success('Registration Success'));
+
+            // Login after registration
+            dispatch(userActions.login(user));
         }
         catch(error)
         {
@@ -77,7 +81,10 @@ function login(user: User): (dispatch: Dispatch<any>) => void
                 user: user
             });
 
-            dispatch(alertActions.success('Login Success'))
+            dispatch(alertActions.success('Login Success'));
+
+            // Send to the home route
+            history.push('/');            
         }
         catch(error)
         {

@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { connect, DispatchProp } from 'react-redux';
-import { reduxForm, Field, Form } from 'redux-form';
+import { reduxForm, Field, Form, isPristine, InjectedFormProps } from 'redux-form';
 import { userActions } from '../actions';
 import { AuthenticationState as LoginProps } from '../models';
 import { CustomInput } from './CustomInput';
@@ -13,12 +14,12 @@ interface LoginState
     submitted: boolean
 }
 
-class LoginPage extends React.Component<LoginProps & DispatchProp<any>, LoginState>
+class LoginPage extends React.Component<LoginProps & DispatchProp<any> & InjectedFormProps, LoginState>
 {
-    constructor(props: LoginProps & DispatchProp<any>)
+    constructor(props: LoginProps & DispatchProp<any> & InjectedFormProps)
     {
         super(props);
-
+        
         // Logout the user if not already logged out
         const { dispatch } = this.props;
         dispatch(userActions.logout());
@@ -67,11 +68,11 @@ class LoginPage extends React.Component<LoginProps & DispatchProp<any>, LoginSta
 
     public render(): React.ReactNode
     {
-        const { loggingIn } = this.props;
+        const { loggingIn, invalid } = this.props;
 
         return (
             <div>
-                <h2> Log in to Crypto-Arbitrage </h2>
+                <h1> Log in to Crypto </h1>
                 <Form onSubmit={this.handleSubmit}>
                     <div>
                         <Field name="username" type="text" label="Username" component={CustomInput} validate={[required, validateUsername]} onChange={this.handleChange}/>
@@ -80,9 +81,12 @@ class LoginPage extends React.Component<LoginProps & DispatchProp<any>, LoginSta
                         <Field name="password" type="password" label="Password" component={CustomInput} validate={[required, validatePassword]} onChange={this.handleChange}/>
                     </div>
                     <div>
-                        <button type="submit" disabled={loggingIn}> Log in </button>
+                        <button type="submit" disabled={loggingIn || invalid}> Log in </button>
                     </div>
                 </Form>
+                <div>
+                    <p> No Account? <Link to="/register"> Register now </Link> </p>
+                </div>
             </div>
         );
     }
