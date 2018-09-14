@@ -1,25 +1,33 @@
 import * as React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { format } from 'd3';
-// Fix this import
+import { format, scaleTime } from 'd3';
+
+// Can I combine these imports so that they use only 'react-stockcharts' instead of nested folders??
+import { ChartCanvas, Chart } from "react-stockcharts";
 import {
-    ChartCanvas,
-    Chart,
-    CandlestickSeries,
-    LineSeries,
-    BarSeries,
-    XAxis,
-    YAxis,
-    MouseCoordinateX,
-    MouseCoordinateY,
-    CurrentCoordinate,
-    MovingAverageTooltip,
-    OHLCTooltip,
-    EdgeIndicator,
-    AreaSeries,
-    CrossHairCursor,
-    ema
-} from 'react-stockcharts';
+	BarSeries,
+	AreaSeries,
+	CandlestickSeries,
+	LineSeries,
+	MACDSeries,
+} from "react-stockcharts/lib/series";
+import { XAxis, YAxis } from "react-stockcharts/lib/axes";
+import {
+	CrossHairCursor,
+	EdgeIndicator,
+	CurrentCoordinate,
+	MouseCoordinateX,
+	MouseCoordinateY,
+} from "react-stockcharts/lib/coordinates";
+
+import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
+import {
+	OHLCTooltip,
+	MovingAverageTooltip,
+	MACDTooltip,
+} from "react-stockcharts/lib/tooltip";
+import { ema, macd, sma } from "react-stockcharts/lib/indicator";
+import { fitWidth } from "react-stockcharts/lib/helper";
 import { User } from '../models';
 
 interface HomeProps
@@ -38,6 +46,7 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
     {
         super(props);
 
+        // Set the initial data??
         this.state = {
             data: [
             ]
@@ -46,6 +55,8 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
 
     public render(): React.ReactNode
     {
+        // Extract prop data
+        //const { width, ratio } = this.props;
         // Extract the data from the state
         const { data } = this.state;
 
@@ -75,7 +86,7 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
         return (
             <div>
                 <h1> Home Page </h1>
-                <ChartCanvas height={600}
+                <ChartCanvas height={600} width={1200} ratio={2} xScale={scaleTime()}
 				    margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
 				    seriesName="MSFT"
 				    data={data}
