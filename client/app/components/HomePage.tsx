@@ -29,10 +29,12 @@ import {
 import { ema, macd, sma } from "react-stockcharts/lib/indicator";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { User } from '../models';
+import { SvgProperties } from 'csstype';
 
 interface HomeProps
 {
-    user: User
+    user: User,
+    type: string
 }
 
 interface HomeState
@@ -49,6 +51,46 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
         // Set the initial data??
         this.state = {
             data: [
+                {
+                    date: new Date(2018, 2, 2),
+                    open: 5000,
+                    high: 5100,
+                    low: 4900,
+                    close: 4990,
+                    volume: 384
+                },
+                {
+                    date: new Date(2018, 2, 3),
+                    open: 4990,
+                    high: 9000,
+                    low: 400,
+                    close: 6990,
+                    volume: 500
+                },
+                {
+                    date: new Date(2018, 2, 4),
+                    open: 500,
+                    high: 510,
+                    low: 490,
+                    close: 499,
+                    volume: 10
+                },
+                {
+                    date: new Date(2018, 2, 5),
+                    open: 4990,
+                    high: 9000,
+                    low: 300,
+                    close: 6990,
+                    volume: 300
+                },
+                {
+                    date: new Date(2018, 2, 6),
+                    open: 5990,
+                    high: 6400,
+                    low: 300,
+                    close: 5990,
+                    volume: 250
+                }
             ]
         }
     }
@@ -56,9 +98,10 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
     public render(): React.ReactNode
     {
         // Extract prop data
-        //const { width, ratio } = this.props;
+        const { type } = this.props;
+
         // Extract the data from the state
-        const { data } = this.state;
+        const { data: initialData } = this.state;
 
         // Set up the EMA12 and EMA26 lines
         const ema26 = ema()
@@ -72,6 +115,28 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
 			.options({ windowSize: 12 })
 			.merge((d: any, c: any) => {d.ema12 = c;})
             .accessor((d: any) => d.ema12);
+
+        const smaVolume50 = sma()
+            .id(3)
+            .options({
+                windowSize: 50,
+                sourcePath: "volume",
+            })
+            .merge((d: any, c: any) => {d.smaVolume50 = c;})
+            .accessor((d: any) => d.smaVolume50);
+        
+        const macdCalculator = macd()
+            .options({
+                fast: 12,
+                slow: 26,
+                signal: 9,
+            })
+            .merge((d: any, c: any) => {d.macd = c;})
+            .accessor((d: any) => d.macd);
+
+        const calculatedData = smaVolume50(macdCalculator(ema12(ema26(initialData))));
+        const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor((d: any) => d.date);
+        const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
             
         // Create the options for the candlechart -- make it waterfall
         const mouseEdgeAppearance = {
@@ -86,10 +151,16 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
         return (
             <div>
                 <h1> Home Page </h1>
-                <ChartCanvas height={600} width={1200} ratio={2} xScale={scaleTime()}
-				    margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
-				    seriesName="MSFT"
-				    data={data}
+                <ChartCanvas height={600}
+                    width={1200}
+                    ratio={0.1}
+                    margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
+                    type={type}
+                    seriesName="Arbitrage"
+                    data={data}
+                    xScale={xScale}
+                    xAccessor={xAccessor}
+                    displayXAccessor={displayXAccessor}
                 >
                     <Chart id={1} height={400}
                         yExtents={[(d: any) => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
@@ -105,7 +176,7 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
                             {...mouseEdgeAppearance}
                         />
 
-                        <CandlestickSeries />
+                        <CandlestickSeries/>
                         <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()}/>
                         <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()}/>
 
@@ -143,7 +214,7 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
                         />
                     </Chart>
                     <Chart id={2} height={150}
-                        yExtents={[(d: any) => d.volume]}
+                        yExtents={[(d: any) => d.volume, smaVolume50.accessor()]}
                         origin={(w: any, h: any) => [0, h - 300]}
                     >
                         <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/>
@@ -156,8 +227,9 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
                         />
 
                         <BarSeries yAccessor={(d: any) => d.volume} fill={(d: any) => d.close > d.open ? "#6BA583" : "#FF0000"} />
+                        <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
                     </Chart>
-                    <CrossHairCursor/>
+                    <CrossHairCursor />
                 </ChartCanvas>
             </div>
         );
@@ -167,11 +239,13 @@ class HomePage extends React.Component<HomeProps & DispatchProp<any>, HomeState>
 function mapStateToProps(state: any): HomeProps
 {
     const { user } = state.authentication;
+    const type = "svg";
     return {
-        user
+        user,
+        type
     };
 }
 
 export default connect<HomeProps>(
     mapStateToProps
-)(HomePage);
+)(fitWidth(HomePage));
