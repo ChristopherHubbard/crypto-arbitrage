@@ -1,0 +1,3 @@
+/dist StaticR Static getStatic
+/ HomeR GET
+/build.js BundleR GET
