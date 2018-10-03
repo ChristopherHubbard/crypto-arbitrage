@@ -1,12 +1,18 @@
 -- Language overloads
 {-# LANGUAGE DuplicateRecordFields      #-}
+{-# LANGUAGE RecordWildCards            #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DeriveFunctor              #-}
+{-# LANGUAGE DeriveTraversable          #-}
+{-# LANGUAGE DeriveFoldable             #-}
 
 module Trading.Order
 (
     MarketOrder,
     LimitOrder,
     Amount,
-    Price
+    Price,
+    price
 ) where
 
     -- Imports
@@ -19,16 +25,22 @@ module Trading.Order
 
     -- Set up the Market and Limit order TypeClasses
 
-    -- Market orders to be executed when the 
+    -- Market orders to be executed when the user wants current price
     data MarketOrder = MarketOrder
         {
-            order_user :: User,
-            order_amount :: Amount
-        } deriving (Eq, Show) -- Why use Generic??
+            user :: User,
+            amount :: Amount
+        } deriving (Eq, Show, Generic) -- Why use Generic??
 
+    -- Limit orders to be executed when the price hits price
     data LimitOrder = LimitOrder
         {
-            order_user :: User,
-            order_fromAmount :: Amount,
-            order_toAmount :: Amount
-        } deriving (Eq, Show) -- Why use Generic
+            user :: User,
+            fromAmount :: Amount, -- Amount of base currency
+            toAmount :: Amount -- Amount of target currency
+        } deriving (Eq, Show, Generic) -- Why use Generic
+
+    -- Function to find the price of an order between arbitrary currencies
+    price :: LimitOrder -> Price
+    price LimitOrder {..} = -- Deconstruct the limit order's elements
+        fromAmount / toAmount
