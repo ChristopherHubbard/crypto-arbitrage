@@ -27,6 +27,7 @@ dependencies:
 - containers
 - ghc
 - text
+- stm
 
 library:
   source-dirs: src

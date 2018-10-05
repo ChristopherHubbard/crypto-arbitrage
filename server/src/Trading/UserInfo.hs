@@ -1,12 +1,18 @@
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DeriveFunctor      #-}
+{-# LANGUAGE DeriveTraversable  #-}
+{-# LANGUAGE DeriveFoldable     #-}
+
 module Trading.UserInfo 
 (
     Address,
-    User
+    User (..)
 ) where
 
     import GHC.Generics
     import Data.Text
     import qualified Data.Sequence as Q
+    import Trading.Currency
 
     -- Address type alias
     type Address = Text
@@ -18,5 +24,5 @@ module Trading.UserInfo
             password :: Maybe Text, -- Should this be stored like this??
             phone :: Maybe Text,
             email :: Maybe Text,
-            addresses :: Q.Seq Address -- All the addresses of this users wallets on the exchange -- should be generated on user first order for each currency
+            addresses :: Q.Seq (Currency, Address) -- List of crypto currency/addresses -- User should set these in the UI (no internal wallet!)
         } deriving (Eq, Show)
