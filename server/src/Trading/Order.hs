@@ -8,8 +8,8 @@
 
 module Trading.Order
 (
-    MarketOrder,
-    LimitOrder,
+    MarketOrder (..),
+    LimitOrder (..),
     Amount,
     Price,
     price
@@ -28,8 +28,8 @@ module Trading.Order
     -- Market orders to be executed when the user wants current price
     data MarketOrder = MarketOrder
         {
-            user :: User,
-            amount :: Amount
+            mUser :: User,
+            mAmount :: Amount
         } deriving (Eq, Show, Generic) -- Why use Generic??
 
     -- Limit orders to be executed when the price hits price

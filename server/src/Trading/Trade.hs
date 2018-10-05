@@ -3,11 +3,9 @@
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE DeriveFoldable     #-}
+{-# LANGUAGE StandaloneDeriving     #-}
 
-module Trading.Trade
-(
-    Trade
-) where
+module Trading.Trade where
 
     import GHC.Generics
     import Trading.UserInfo
@@ -22,10 +20,10 @@ module Trading.Trade
             amount :: Amount
         } deriving (Eq, Show, Generic)
 
-    data TradeGeneric a = TradeGeneric
+    data TradeF a = Trade
         {
             from :: a,
             to :: a
         } deriving (Eq, Show, Functor, Traversable, Foldable, Generic)
 
-    type Trade = TradeGeneric DoubleEntry
+    type Trade = TradeF DoubleEntry

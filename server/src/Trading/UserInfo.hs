@@ -6,7 +6,7 @@
 module Trading.UserInfo 
 (
     Address,
-    User
+    User (..)
 ) where
 
     import GHC.Generics

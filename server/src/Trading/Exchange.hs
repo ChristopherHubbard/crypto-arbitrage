@@ -1,7 +1,7 @@
 
 module Trading.Exchange
 (
-    Exchange
+    Exchange (..)
 ) where
 
     import Trading.OrderBook
