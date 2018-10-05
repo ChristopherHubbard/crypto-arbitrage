@@ -30,6 +30,17 @@ module Trading.OrderBook where
     type OrderBook = OrderBookF LimitOrder
 
     -- Set up functions for the orderbook
+    -- Create a new order book
+    newOrderBook :: (Currency, Currency) -> OrderBook
+    newOrderBook (from, to) =
+        -- Create a new order book with empty bid and ask maps
+        OrderBook
+            {
+                fromCurrency = from,
+                toCurrency = to,
+                bids = M.empty,
+                asks = M.empty
+            }
 
     -- Fill a bid order -----------------------------------------------------------------------------------------------------------
     fillBid :: OrderBook -> (TaggedBid LimitOrder) -> ([Trade], OrderBook)

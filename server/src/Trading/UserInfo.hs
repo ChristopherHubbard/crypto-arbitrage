@@ -12,6 +12,7 @@ module Trading.UserInfo
     import GHC.Generics
     import Data.Text
     import qualified Data.Sequence as Q
+    import Trading.Currency
 
     -- Address type alias
     type Address = Text
@@ -23,5 +24,5 @@ module Trading.UserInfo
             password :: Maybe Text, -- Should this be stored like this??
             phone :: Maybe Text,
             email :: Maybe Text,
-            addresses :: Q.Seq Address -- List of crypto addresses -- User should set these in the UI (no internal wallet!)
+            addresses :: Q.Seq (Currency, Address) -- List of crypto currency/addresses -- User should set these in the UI (no internal wallet!)
         } deriving (Eq, Show)
